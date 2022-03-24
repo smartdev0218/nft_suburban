@@ -1,6 +1,6 @@
 import React from "react";
 import mouseIcon from '../images/icons/mouse.png';
-import gif3web4 from '../images/gif3web4.gif'
+import gif3web5 from '../images/gif3web5.gif'
 
 function Rarity(){
     return(
@@ -46,7 +46,7 @@ function Rarity(){
 						<div className="carousel-inner3">
                             <img
                                 className="w-100"
-                                src={gif3web4}
+                                src={gif3web5}
                                 alt=""
                             />
 							</div>
