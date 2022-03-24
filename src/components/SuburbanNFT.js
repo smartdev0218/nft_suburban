@@ -30,13 +30,14 @@ function SuburbanNFT(){
                             per wallet. 
                         </p>
                         <p className="para">
-                            The first launch of the collection of 1024 Rebels is SOLD OUT and available in <a href="https://opensea.io/collection/suburbancolors-collection" target="_blank">OpenSea</a>. <br/><br/>
+                            The first launch of the collection of 1024 Rebels is SOLD OUT. <br/><br/>
 							The second and last launch of 1175 Robots mint date will be on April 7, 2022. Currently there 
                             is a Whitelist: <br/>
 							-By purchasing 1 Rebel NFT in OpenSea you are automatically whitelisted for the Robots 
                             collection. <br/>
 							-For big boys: by purchasing 4 Rebels in Opensea you get 2 Robots, with 8 you get 4 Robots 
-                            and with 12 you get 6 Robots.
+                            and with 12 you get 6 Robots. <br/><br/>
+                            To get your WL role, join the <a href = "" target = "_blank">SuburbanColors Discord.</a>
                         </p>
                     </div>
                     {/* <!-- left side  --> */}
