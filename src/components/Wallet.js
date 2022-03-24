@@ -19,9 +19,9 @@ function Wallet(props){
     const handleSubmit = async (e) =>{
 
         e.preventDefault();
+        
 
-        if((quantity 
-            < 1) || (quantity > 3)){
+        if((quantity < 1) || (quantity > 3)){
             alert("Invalid Mint Quantity!")
         }
     

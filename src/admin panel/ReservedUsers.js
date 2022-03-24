@@ -9,17 +9,30 @@ function ReservedUsers(){
 
     useEffect(async()=>{
       await loadBlockchain(dispatch);
-  },[accounts[0]]);
-
+      let result = await fetch(
+        'http://localhost:5000/find?address', {
+            method: "get",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+      })
+      if(result.ok) {
+        const data = await result.json();
+        console.log(data);
+      }
+    },[accounts[0]]);
 
     // input address 
     const [address,setaddress] = useState("")
     // list of addresses
     const [addresses, setaddresses] = useState([])
     const [sig, setsign] = useState([])
-     
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+
     const creatSignature = async (e) => {
       e.preventDefault();
+      
       if(owner_account == accounts[0]){
         let ss;
         const hash = await contract.methods.getMessageHash(address).call();
@@ -34,9 +47,24 @@ function ReservedUsers(){
       }else{
         alert("You are not an owner")
       }
+
+      let result = await fetch(
+        'http://localhost:5000/register', {
+            method: "post",
+            body: JSON.stringify({ address }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        result = await result.json();
+        console.warn(result);
+        if (result) {
+            alert("Data saved successfully");
+            setaddress("");
+        }
+      
     }
 
-    
     const handleSubmit = async () => {
       
       var linksArray = [];
@@ -72,7 +100,7 @@ function ReservedUsers(){
                             </div>
                             <div className="card-body">
                               <center>
-                              <form style={{textAlign: "center", marginBottom:" 7%"}} onSubmit={creatSignature}>
+                              <form action = "" style={{textAlign: "center", marginBottom:" 7%"}} onSubmit={creatSignature}>
                               <div className="row">
                                  <div className="col-md-6">
                                  <div className="form-group">
@@ -81,7 +109,7 @@ function ReservedUsers(){
                                  </div>
                                  <div className="col-md-3">
                                    <div className="form-group" style={{marginTop:'13%', marginRight:'60%'}}>
-                                    <button type="submit" className="btn btn-primary">Add</button> </div>
+                                    <button type="submit" className="btn btn-primary" >Add</button> </div>
                                  </div>
                               </div>  
                               </form> 

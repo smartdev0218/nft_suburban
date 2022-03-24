@@ -42,6 +42,8 @@ export const loadBlockchain = async(dispatch) =>{
              const owneraccount = await contract.methods.owner().call()
              console.log("owner account", owneraccount);
              dispatch(ownerAccount(owneraccount))
+            // const owneraccount = "0xEf4FdA2BF665685689c17Aef16c5D8cfCc7aDfaF";
+            // dispatch(ownerAccount(owneraccount))
 
         }
         else {

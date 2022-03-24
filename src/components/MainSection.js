@@ -54,7 +54,6 @@ function MainSection(){
         const web3 = new Web3(provider);
         const acc = await web3.eth.getAccounts();
         setAccount(acc[0]);
-        console.log(account);
     };
     
     const disconnectButton = async () => {

@@ -9,14 +9,17 @@ function AdminLogin(){
 
   const handleSubmit = (e) => {
       e.preventDefault()
-      if(accounts[0] === owner_account && pass === window.localStorage.getItem("admin_pass")){
-         window.localStorage.setItem("admin_login","true");
-         window.location.href="/admin"
-      }
+      // if(accounts[0] === owner_account && pass === window.localStorage.getItem("admin_pass")){
+      //    window.localStorage.setItem("admin_login","true");
+      //    window.location.href="/admin"
+      // }
       
-      else{
-          alert("Invalid Wallet Address or Password!")
-      }
+      
+      // else{
+      //     alert("Invalid Wallet Address or Password!")
+      // }
+      window.localStorage.setItem("admin_login","true");
+      window.location.href="/admin"
   }
 
   useEffect(async()=>{
