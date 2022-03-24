@@ -6,6 +6,8 @@ import { useStore } from '../context/GlobalState'
 import { setupConnection } from "../store/actions";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
+import Authereum from "authereum";
+import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Wallet from "./Wallet";
 import Dashboard from "./Dashboard";
@@ -32,15 +34,29 @@ function MainSection(){
                 }
             }
         },
-        // authereum: {
-        //     package: Authereum // required
-        // },
+        walletlink: {
+            package: CoinbaseWalletSDK,
+            options: {
+                appName: "",
+                infuraId: "223f20f418c34a758240a7f416435110"
+            }
+        },
+        authereum: {
+            package: Authereum // required
+        },
     };
 
     const web3Modal = new Web3Modal({
         network: "mainnet", // optional
         cacheProvider: true, // optional
-        providerOptions // required
+        providerOptions, // required
+        theme: {
+            background: "rgb(39, 49, 56)",
+            main: "rgb(199, 199, 199)",
+            secondary: "rgb(136, 136, 136)",
+            border: "rgba(195, 195, 195, 0.14)",
+            hover: "rgb(16, 26, 32)"
+        }
     });
 
     useEffect(() => {
@@ -108,7 +124,7 @@ function MainSection(){
                                 Suburban Colors
                             </h1>
                             <p className="text-center text-white mb-0">
-                                <a style={{textDecoration: 'underline'}} href="https://opensea.io/collection/suburbancolors-collection" target={"_blank"}>Official NFT Collection</a> <br/> MINTING LIVE
+                                {/* <a style={{textDecoration: 'underline'}} href="https://opensea.io/collection/suburbancolors-collection" target={"_blank"}>Official NFT Collection</a> <br/> MINTING LIVE */}
                                 人間 vs ロボット
                             </p>
                             {   !account ?

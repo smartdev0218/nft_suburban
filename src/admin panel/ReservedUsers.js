@@ -9,17 +9,17 @@ function ReservedUsers(){
 
     useEffect(async()=>{
       await loadBlockchain(dispatch);
-      let result = await fetch(
-        'http://localhost:5000/find?address', {
-            method: "get",
-            headers: {
-                'Content-Type': 'application/json'
-            }
-      })
-      if(result.ok) {
-        const data = await result.json();
-        console.log(data);
-      }
+      // let result = await fetch(
+      //   'http://localhost:5000/find?address', {
+      //       method: "get",
+      //       headers: {
+      //           'Content-Type': 'application/json'
+      //       }
+      // })
+      // if(result.ok) {
+      //   const data = await result.json();
+      //   console.log(data);
+      // }
     },[accounts[0]]);
 
     // input address 
