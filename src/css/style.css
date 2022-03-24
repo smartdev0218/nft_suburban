@@ -303,9 +303,9 @@ main .slider__container img {
     background-color: #303030;
 }
 #team .team__member .card .img__wrap {
-    width: 180px;
-    height: 180px;
-    background-color: #073b4c;
+    width: 300px;
+    /*height: 180px;*/
+    /*background-color: #073b4c;*/
     display: grid;
     align-items: center;
     justify-items: center;
@@ -331,21 +331,6 @@ main .slider__container img {
     #team .team__member .card .card-body a {
         font-size: 25px;
     }
-}
-#team .team__member .card:nth-child(2) .img__wrap {
-    background-color: #6a4c93;
-}
-#team .team__member .card:nth-child(3) .img__wrap {
-    background-color: #f2e8cf;
-}
-#team .team__member .card:nth-child(4) .img__wrap {
-    background-color: #723d46;
-}
-#team .team__member .card:nth-child(5) .img__wrap {
-    background-color: #63058f;
-}
-#team .team__member .card:nth-child(6) .img__wrap {
-    background-color: #33030b;
 }
 
 #faq .container .accordion-button:focus {

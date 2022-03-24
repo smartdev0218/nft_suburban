@@ -30,9 +30,7 @@ function Rarity(){
                               is open. <br/>
                             There are dozens of different categorized traits with its percentage of chances of being mint.
                             <br/>
-							If interested in rarity, you can check the collection in <a href="https://rarity.tools
-                            /suburbancolors-collection/" target="_blank">Rarity.tools</a> or <a href="https://
-                            raritysniper.com/suburbancolors" target="_blank">Raritysniper</a>
+							If interested in rarity, you can check the collection in <a href="https://rarity.tools/suburbancolors-collection/" target="_blank">Rarity.tools</a> or <a href="https://raritysniper.com/suburbancolors" target="_blank">Raritysniper</a>
                         </p>
 
                     </div>
