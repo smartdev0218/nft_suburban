@@ -1,7 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import {ADDRESS} from '../contract/SmartContract';
+import mouseIcon from '../images/icons/mouse.png';
 import { useStore } from '../context/GlobalState'
 import { getAssets } from '../store/asyncActions';
+
 
 function Dashboard(props){
     var axios = require('axios').default;
@@ -107,6 +109,7 @@ function Dashboard(props){
                         }
                      
                     </div>
+                    
                 </div>
             </section>
         </div>

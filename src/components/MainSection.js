@@ -11,12 +11,19 @@ import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Wallet from "./Wallet";
 import Dashboard from "./Dashboard";
+import { NoEthereumProviderError } from "@web3-react/injected-connector";
 
 function MainSection(){
     // const [{ accounts }, dispatch] = useStore();
     // const [status, setStatus] = useState("Connect");
     const [account, setAccount] = useState();
-    
+    const [distance, setDistance] = useState(new Date("Mar 26, 2022 02:56:00") - new Date().getTime());
+    const [label1, setLabel1] = useState("Rebels NFT Collection SOLD OUT");
+    const [label2, setLabel2] = useState("Robots NFT Mint date: April 7th");
+    const [label3, setLabel3] = useState("Official NFT Collection");
+    const [label4, setLabel4] = useState("MINTING LIVE ");
+
+
     const providerOptions = {
         metamask: {
             id: "injected",
@@ -50,20 +57,30 @@ function MainSection(){
         network: "mainnet", // optional
         cacheProvider: true, // optional
         providerOptions, // required
-        theme: {
-            background: "rgb(39, 49, 56)",
-            main: "rgb(199, 199, 199)",
-            secondary: "rgb(136, 136, 136)",
-            border: "rgba(195, 195, 195, 0.14)",
-            hover: "rgb(16, 26, 32)"
-        }
+        theme: "dark"
     });
+
+    
 
     useEffect(() => {
         if(web3Modal.cachedProvider) {
             connectButton();
         }
-    })
+        const interval = setInterval(() => {
+            if(distance > 1) {
+                setDistance(new Date("Mar 26, 2022 02:56:00") - new Date().getTime());
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("demo").innerHTML = "Countdown to mint: <br>" + days + "d " + hours + "h "
+                + minutes + "m " + seconds + "s ";
+            }
+            if(distance > -1000 && distance < 1000) window.location.href = "/";
+        }, 1000);
+        
+        return () => clearInterval(interval);
+    }, [distance])
 
     const connectButton =  async () => {
         const provider = await web3Modal.connect();
@@ -76,7 +93,7 @@ function MainSection(){
         await web3Modal.clearCachedProvider();
         setAccount("");
     };
-
+    
     return(
         <>
         <div id="main_and_text_container">
@@ -124,40 +141,68 @@ function MainSection(){
                                 Suburban Colors
                             </h1>
                             <p className="text-center text-white mb-0">
-                                {/* <a style={{textDecoration: 'underline'}} href="https://opensea.io/collection/suburbancolors-collection" target={"_blank"}>Official NFT Collection</a> <br/> MINTING LIVE */}
-                                人間 vs ロボット
-                            </p>
-                            {   !account ?
-                                <a
-                                id="collect__now"
-                                className="
-                                    text-underline text-center
-                                f    d-block
-                                    text-bold
-                                "
-                                //href="#wallet"
-                                onClick={ connectButton }
-                                >Connect to a Wallet
-                                </a> : 
-                                <a
-                                    id="collect__now"
-                                    className="
+                                { (distance > 1) ? <></> :
+                                    <a style={{textDecoration: 'underline'}} href="https://opensea.io/collection/suburbancolors-collection" target={"_blank"}>
+                                    {label3}
+                                    </a>
+                                }<br/>
+                                {
+                                    (distance > 1) ? <></> : label4
+                                }
+                                人間 vs ロボット <br/>
+                                
+                                { (distance > 1) ? label1 : <></>} <br/>
+                                { (distance > 1) ? <b>{label2}</b> : <></>}
+                                {
+                                    (distance > 1) ? 
+                                    <p
+                                        class="
                                         text-underline text-center
                                     f    d-block
                                         text-bold
-                                    "
-                                    //href="#wallet"
-                                    onClick={ disconnectButton }
-                                >Disconnect
-                                </a>
+                                    " id="demo"></p> : <></>
+                                }
+                            </p>
+                            
+                            {
+                                (distance > 1) ? <></> :
+                                (
+                                    !account ?
+                                        <a
+                                        id="collect__now"
+                                        className="
+                                            text-underline text-center
+                                        f    d-block
+                                            text-bold
+                                        "
+                                        //href="#wallet"
+                                        onClick={ connectButton }
+                                        >Connect to a Wallet
+                                        </a> : 
+                                        <a
+                                            id="collect__now"
+                                            className="
+                                                text-underline text-center
+                                            f    d-block
+                                                text-bold
+                                            "
+                                            //href="#wallet"
+                                            onClick={ disconnectButton }
+                                        >Disconnect
+                                        </a>
+                                )
                             }
                         </div>
                     </div>
                 </div>
             </section>
         </div>
-        <Wallet account = {account} />
-        <Dashboard account = {account} />
+        {
+            ( distance > 1 ) ? <></> : <Wallet account = {account} />
+        }
+        {
+            ( distance > 1 ) ? <></> : <Dashboard account = {account}/>
+        }
         </>
     );
 }

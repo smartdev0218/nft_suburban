@@ -1,5 +1,5 @@
 
-export const ADDRESS = '0xF6ACA6558dDC8aFef069971A1746d15b96118A50'
+export const ADDRESS = '0x3F32F893eF0e192D74f1E895e75Fc24b97340eC1'
 
 export const ABI = [
 	{
@@ -289,6 +289,19 @@ export const ABI = [
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "quantity",
+						"type": "uint256"
+					}
+				],
+				"name": "mintByWhitelist",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "mintPrice",
 				"outputs": [
@@ -469,6 +482,19 @@ export const ABI = [
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "newPrice",
+						"type": "uint256"
+					}
+				],
+				"name": "setWhitelistPrice",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "bytes4",
 						"name": "interfaceId",
 						"type": "bytes4"
@@ -585,6 +611,19 @@ export const ABI = [
 						"internalType": "bool",
 						"name": "",
 						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "whiteMintPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",

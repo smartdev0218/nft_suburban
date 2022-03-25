@@ -9,10 +9,17 @@ function SuburbanNFT(){
             {/* <!-- <div className="container border-bottom"> --> */}
             <div className="container">
                 <div className="row justify-content-between align-items-center">
+                <a href="#plot" className="mouse text-center"
+                            ><img
+                                className="d-inline-block"
+                                src={mouseIcon}
+                                alt="mouse-icon"
+                        /></a>
                     {/* <!-- right side  --> */}
                     <div
                         className="col-12 col-lg-6 right__side order-1 pt-5 pt-lg-0"
                     >
+                        
                         <div
                             className="btn__style text-white mb-1 mb-lg-2 text-left"
                         >
@@ -37,7 +44,7 @@ function SuburbanNFT(){
                             collection. <br/>
 							-For big boys: by purchasing 4 Rebels in Opensea you get 2 Robots, with 8 you get 4 Robots 
                             and with 12 you get 6 Robots. <br/><br/>
-                            To get your WL role, join the <a href = "" target = "_blank">SuburbanColors Discord.</a>
+                            To get your WL role, join the <a href = "https://discord.gg/na4EtghJ8J" target = "_blank">SuburbanColors Discord.</a>
                         </p>
                     </div>
                     {/* <!-- left side  --> */}

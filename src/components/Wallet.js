@@ -3,6 +3,8 @@ import mouseIcon from '../images/icons/mouse.png';
 import Loader from '../images/loader.gif';
 import { useStore } from '../context/GlobalState';
 import { UserMint } from "../store/asyncActions";
+import Web3 from "web3";
+import { ADDRESS, ABI } from '../contract/SmartContract';
 
 function Wallet(props){
     const [{ accounts,contract,total_mint,user_reserved,token_price,launch_time, connect}, dispatch] = useStore();
@@ -20,46 +22,55 @@ function Wallet(props){
 
         e.preventDefault();
         
+        const web3 = new Web3(Web3.givenProvider);
+        const accounts = await web3.eth.getAccounts();
+        
+        const contract = new web3.eth.Contract(ABI, ADDRESS);
+        await contract.methods.mintByUser(quantity)
+        .send({
+            from: accounts[0],
+            value: quantity * 30000000000000000,
+        });
 
-        if((quantity < 1) || (quantity > 3)){
-            alert("Invalid Mint Quantity!")
-        }
+        // if((quantity < 1) || (quantity > 3)){
+        //     alert("Invalid Mint Quantity!")
+        // }
     
-        else if(Number(total_mint) >= 2199 - user_reserved){
-            alert("Public Sale Limit is Ended!")
-        }
+        // else if(Number(total_mint) >= 2199 - user_reserved){
+        //     alert("Public Sale Limit is Ended!")
+        // }
 
-         else if(Number(total_mint) + Number(quantity) > (2199 - user_reserved)){
-            alert("Max Limit To Total Sale!")
-        }
+        //  else if(Number(total_mint) + Number(quantity) > (2199 - user_reserved)){
+        //     alert("Max Limit To Total Sale!")
+        // }
          
-        else{
-           const total_amount = token_price * quantity;    
-           console.log(total_amount);
-           //setTransactionSuccessful(true);
-           setTransactionError("");
+        // else{
+        //    const total_amount = token_price * quantity;    
+        //    console.log(total_amount);
+        //    //setTransactionSuccessful(true);
+        //    setTransactionError("");
          
-            try {
-                setTransactionInprocess(true)
-                const newTransaction = {
-                    quantity: quantity,
-                    total_amount: total_amount
-                }
-                console.log("trx obj ",newTransaction)
-                await UserMint(contract, accounts,newTransaction, dispatch);
+        //     try {
+        //         setTransactionInprocess(true)
+        //         const newTransaction = {
+        //             quantity: quantity,
+        //             total_amount: total_amount
+        //         }
+        //         console.log("trx obj ",newTransaction)
+        //         await UserMint(contract, accounts,newTransaction, dispatch);
                 
-                setTransactionInprocess(false);
-                setTransactionSuccessful(true);
-                document.getElementById('mintBox').value = ''
+        //         setTransactionInprocess(false);
+        //         setTransactionSuccessful(true);
+        //         document.getElementById('mintBox').value = ''
 
-            }catch (error){
-                console.log("error trax = ",error);
-                setTransactionInprocess(false);
-                setTransactionSuccessful(false);
-                setTransactionError(error.message); 
-            }
+        //     }catch (error){
+        //         console.log("error trax = ",error);
+        //         setTransactionInprocess(false);
+        //         setTransactionSuccessful(false);
+        //         setTransactionError(error.message); 
+        //     }
          
-        }
+        // }
         
     }
     
@@ -95,7 +106,7 @@ function Wallet(props){
                             <div className="col-12 mt-4">
                                 {/* <!-- para  --> */}
                                 {connect == 1 ? <p className="para text-center mb-0 mb-lg-1">Total NFTs mint until now: {total_mint}/2199</p> : null} 
-                                <p className="para text-center">Minting fee for 1 NFT = 0.03 ETH</p>
+                                <p className="para text-center">Minting fee for 1 NFT = 0.07 ETH / 0.06 ETH WL</p>
                                 {/* <!-- button  --> */}
                                 <div className="btn-wrap text-center">
                                     <a href="" className="cus_btn text-uppercase text-white text-center" onClick={handleSubmit}>buy</a>
