@@ -8,12 +8,12 @@ import { ADDRESS, ABI } from '../contract/SmartContract';
 
 function Wallet(props){
     const [{ accounts,contract,total_mint,user_reserved,token_price,launch_time, connect}, dispatch] = useStore();
-    const [quantity,setquantity] = useState(0)
+    const [quantity,setquantity] = useState(1)
     const [isTransactionInProcess, setTransactionInprocess] = useState(false);
     const [isTransactionSuccessful , setTransactionSuccessful] = useState(false);
     const [transactionError , setTransactionError] = useState("");
     const [addresses, setAddresses] = useState([]);
-    const [account, setAccount] = useState([]);
+    // const [account, setAccount] = useState([]);
 
     const styles = {
         color: 'white'
@@ -21,7 +21,7 @@ function Wallet(props){
 
     const checkAddress = () => {
         for(var i = 0; i < addresses.length; i++) {
-            if(addresses[i] == account[0]) {
+            if(addresses[i] == props.account) {
                 return true;
             }
         }
@@ -29,8 +29,8 @@ function Wallet(props){
     }
 
     useEffect(async () => {
-        const web3 = new Web3(Web3.givenProvider);
-        setAccount(await web3.eth.getAccounts());
+        // const web3 = new Web3(Web3.givenProvider);
+        // setAccount(await web3.eth.getAccounts());
     })
     const handleSubmit = async (e) =>{
 
@@ -46,15 +46,16 @@ function Wallet(props){
         
         
         const web3 = new Web3(Web3.givenProvider);
-        setAccount(await web3.eth.getAccounts());
-        console.log(account[0]);
+        // setAccount(await web3.eth.getAccounts());
+        // const account = await web3.eth.getAccounts()
+        // console.log(account[0]);
 
         //white mint
         if(checkAddress() == true) {
             const contract = new web3.eth.Contract(ABI, ADDRESS);
             await contract.methods.mintByWhilteAdress(quantity)
             .send({
-                from: account[0],
+                from: props.account,
                 value: quantity * 60000000000000000,
             });
         }
@@ -63,7 +64,7 @@ function Wallet(props){
             const contract = new web3.eth.Contract(ABI, ADDRESS);
             await contract.methods.mintByUser(quantity)
             .send({
-                from: account[0],
+                from: props.account,
                 value: quantity * 70000000000000000,
             });
         }
@@ -143,7 +144,7 @@ function Wallet(props){
                             {/* <!-- number to min  --> */}
                             <div className="col-12 mt-4 mt-lg-0 col-lg-6">
                                 <h3 className="text-white text-center text-lg-start">NFTs to Mint: (Max 3)</h3>
-                                <input type="text" id="mintBox" className="form-control py-2" style={styles} min="1" max="3"  onChange={(e)=> setquantity(e.target.value)} required/>
+                                <input type="text" id="mintBox" className="form-control py-2" style={styles} min="1" max="3" value = {quantity}  onChange={(e)=> setquantity(e.target.value)} required/>
                             </div>
                             {/* <!-- buttons  --> */}
                             <div className="col-12 mt-4">

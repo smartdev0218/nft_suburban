@@ -17,7 +17,7 @@ function MainSection(){
     // const [{ accounts }, dispatch] = useStore();
     // const [status, setStatus] = useState("Connect");
     const [account, setAccount] = useState();
-    const [distance, setDistance] = useState(new Date("Mar 26, 2022 02:56:00") - new Date().getTime());
+    const [distance, setDistance] = useState(new Date("Mar 26, 2022 23:32:00") - new Date().getTime());
     const [label1, setLabel1] = useState("Rebels NFT Collection SOLD OUT");
     const [label2, setLabel2] = useState("Robots NFT Mint date: April 7th");
     const [label3, setLabel3] = useState("Official NFT Collection");
@@ -68,7 +68,7 @@ function MainSection(){
         }
         const interval = setInterval(() => {
             if(distance > 1) {
-                setDistance(new Date("Mar 26, 2022 02:56:00") - new Date().getTime());
+                setDistance(new Date("Mar 26, 2022 23:32:00") - new Date().getTime());
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -83,10 +83,14 @@ function MainSection(){
     }, [distance])
 
     const connectButton =  async () => {
-        const provider = await web3Modal.connect();
-        const web3 = new Web3(provider);
-        const acc = await web3.eth.getAccounts();
-        setAccount(acc[0]);
+        try {
+            const provider = await web3Modal.connect();
+            const web3 = new Web3(provider);
+            const acc = await web3.eth.getAccounts();
+            setAccount(acc[0]);
+        } catch(error) {
+            if(error.message == "User rejected") window.location.reload();
+        }
     };
     
     const disconnectButton = async () => {
@@ -143,9 +147,9 @@ function MainSection(){
                             <p className="text-center text-white mb-0">
                                 { (distance > 1) ? <></> :
                                     <a style={{textDecoration: 'underline'}} href="https://opensea.io/collection/suburbancolors-collection" target={"_blank"}>
-                                    {label3}
+                                    {label3}<br/>
                                     </a>
-                                }<br/>
+                                }
                                 {
                                     (distance > 1) ? <></> : label4
                                 }
