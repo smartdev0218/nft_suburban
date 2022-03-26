@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import mouseIcon from '../images/icons/mouse.png';
 import Loader from '../images/loader.gif';
 import { useStore } from '../context/GlobalState';
@@ -12,25 +12,68 @@ function Wallet(props){
     const [isTransactionInProcess, setTransactionInprocess] = useState(false);
     const [isTransactionSuccessful , setTransactionSuccessful] = useState(false);
     const [transactionError , setTransactionError] = useState("");
+    const [addresses, setAddresses] = useState([]);
+    const [account, setAccount] = useState([]);
 
     const styles = {
         color: 'white'
     }
 
+    const checkAddress = () => {
+        for(var i = 0; i < addresses.length; i++) {
+            if(addresses[i] == account[0]) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    useEffect(async () => {
+        const web3 = new Web3(Web3.givenProvider);
+        setAccount(await web3.eth.getAccounts());
+    })
     const handleSubmit = async (e) =>{
 
         e.preventDefault();
         
-        const web3 = new Web3(Web3.givenProvider);
-        const accounts = await web3.eth.getAccounts();
+        await fetch("http://localhost:5000/find/")
+        .then(response => response.json())
+        .then(data => {
+            for(var i = 0; i < data.length; i++) {
+                addresses.push(data[i].address);
+            }
+        })
         
-        const contract = new web3.eth.Contract(ABI, ADDRESS);
-        await contract.methods.mintByUser(quantity)
-        .send({
-            from: accounts[0],
-            value: quantity * 30000000000000000,
-        });
+        
+        const web3 = new Web3(Web3.givenProvider);
+        setAccount(await web3.eth.getAccounts());
+        console.log(account[0]);
+
+        //white mint
+        if(checkAddress() == true) {
+            const contract = new web3.eth.Contract(ABI, ADDRESS);
+            await contract.methods.mintByWhilteAdress(quantity)
+            .send({
+                from: account[0],
+                value: quantity * 60000000000000000,
+            });
+        }
+        //Normal mint
+        else {
+            const contract = new web3.eth.Contract(ABI, ADDRESS);
+            await contract.methods.mintByUser(quantity)
+            .send({
+                from: account[0],
+                value: quantity * 70000000000000000,
+            });
+        }
+        
+        // const contract = new web3.eth.Contract(ABI, ADDRESS);
+        // await contract.methods.mintByUser(quantity)
+        // .send({
+        //     from: accounts[0],
+        //     value: quantity * 70000000000000000,
+        // });
 
         // if((quantity < 1) || (quantity > 3)){
         //     alert("Invalid Mint Quantity!")
