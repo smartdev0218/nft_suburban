@@ -1,4 +1,4 @@
-import { setupWeb3, setupContract, addEthereumAccounts, web3LoadingError, totalMinted, mintStatus, mintPrice, userReserved, ownerAccount, launchTime } from "./actions";
+import { setupWeb3, setupContract, addEthereumAccounts, web3LoadingError, totalMinted, mintStatus, mintPrice, whiteMintPrice, userReserved, ownerAccount, launchTime } from "./actions";
 import Web3 from "web3";
 import { ADDRESS, ABI } from '../contract/SmartContract';
 
@@ -30,6 +30,10 @@ export const loadBlockchain = async(dispatch) =>{
              const mintprice = await contract.methods.mintPrice().call()
              console.log("minting Price", mintprice);
              dispatch(mintPrice(mintprice))
+
+             const whitemintPrice = await contract.methods.whiteMintPrice().call()
+             console.log("white minting Price", whitemintPrice);
+             dispatch(whiteMintPrice(whitemintPrice))
 
              const userreserved = await contract.methods.reserved().call()
              console.log("user Reserved", userreserved);
@@ -67,6 +71,15 @@ export const SetTokenPrice = async(contract, accounts, transaction, dispatch)=>{
     console.log("after  transaction ", receipt);   
 }
 
+export const SetToken1Price = async(contract, accounts, transaction, dispatch)=>{
+    console.log("before transaction");
+    const receipt =  await contract.methods.setWhiteMintPrice(web3.utils.toHex(web3.utils.toWei(String(transaction._newprice))))
+    .send({
+        from : accounts[0],
+        maxPriorityFeePerGas: web3.utils.toHex(String(1500000000))
+    });
+    console.log("after  transaction ", receipt);   
+}
 
 export const SetMintStatus= async(contract, accounts, dispatch)=>{
     console.log("before transaction");

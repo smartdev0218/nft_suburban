@@ -4,7 +4,7 @@ import { loadBlockchain } from '../store/asyncActions';
 
 function AdminHome(){
 
-  const [{ total_mint, launch_time, token_price, user_reserved, accounts }, dispatch] = useStore()
+  const [{ total_mint, launch_time, token_price, token_price1, user_reserved, accounts }, dispatch] = useStore()
   
   function convertTimestampToDate(timestamp){
     var date = new Date(timestamp * 1000);
@@ -44,7 +44,7 @@ function AdminHome(){
                       <div className="card-footer">
                         <div className="float-right">
                            <div className="stats">
-                           <h5>2199</h5>
+                           <h5>1145</h5>
                            </div>
                        </div>
                       </div>
@@ -110,7 +110,7 @@ function AdminHome(){
                       <div className="card-footer">
                         <div className="float-right">
                            <div className="stats">
-                           <h5>{2199 - total_mint}</h5>
+                           <h5>{1145 - total_mint}</h5>
                            </div>
                        </div>
                       </div>
@@ -118,6 +118,22 @@ function AdminHome(){
                     <br/>
                   </div>
 
+
+                  <div className="col-lg-4">
+                    <div className="card card-chart">
+                      <div className="card-header">
+                        <h4 className="card-title">White Minting Price</h4> 
+                      </div>
+                      <div className="card-footer">
+                        <div className="float-right">
+                           <div className="stats">
+                           <h5>{token_price1 / 10**18}</h5>
+                           </div>
+                       </div>
+                      </div>
+                    </div>
+                    <br/>
+                  </div>
 
                   <div className="col-lg-4">
                     <div className="card card-chart">
@@ -134,7 +150,6 @@ function AdminHome(){
                     </div>
                     <br/>
                   </div>
-
                   
                 </div>
             

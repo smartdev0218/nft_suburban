@@ -36,6 +36,11 @@ export default (state, action) => {
           ...state,
           token_price: action.payload
         }
+        case 'WHITE_MINT_PRICE':
+        return {
+          ...state,
+          token_price1: action.payload
+        }
         case 'USER_RESERVED':
         return {
           ...state,

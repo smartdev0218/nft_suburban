@@ -149,7 +149,7 @@ function Wallet(props){
                             {/* <!-- buttons  --> */}
                             <div className="col-12 mt-4">
                                 {/* <!-- para  --> */}
-                                {connect == 1 ? <p className="para text-center mb-0 mb-lg-1">Total NFTs mint until now: {total_mint}/2199</p> : null} 
+                                { props.account ? <p className="para text-center mb-0 mb-lg-1">Total NFTs mint until now: {props.total_mint1}/1145</p> : null} 
                                 <p className="para text-center">Minting fee for 1 NFT = 0.07 ETH / 0.06 ETH WL</p>
                                 {/* <!-- button  --> */}
                                 <div className="btn-wrap text-center">

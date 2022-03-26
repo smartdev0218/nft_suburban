@@ -7,21 +7,6 @@ function ReservedUsers(){
 
     const [{ contract, web3, accounts, owner_account },dispatch] = useStore();
 
-    useEffect(async()=>{
-      await loadBlockchain(dispatch);
-      // let result = await fetch(
-      //   'http://localhost:5000/find?address', {
-      //       method: "get",
-      //       headers: {
-      //           'Content-Type': 'application/json'
-      //       }
-      // })
-      // if(result.ok) {
-      //   const data = await result.json();
-      //   console.log(data);
-      // }
-    },[accounts[0]]);
-
     // input address 
     const [address,setaddress] = useState("")
     // list of addresses
@@ -29,20 +14,36 @@ function ReservedUsers(){
     const [sig, setsign] = useState([])
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [state, SetState] = useState(true);
+
+    useEffect(async()=>{
+      await loadBlockchain(dispatch);
+      await fetch("http://localhost:5000/find/")
+        .then(response => response.json())
+        .then(data => {
+            for(var i = 0; i < data.length; i++) {
+                addresses.push(data[i].address);
+            }
+            SetState(false);
+        })
+        console.log(state);
+    },[accounts[0]]);
+
+    
 
     const creatSignature = async (e) => {
       e.preventDefault();
       
       if(owner_account == accounts[0]){
-        let ss;
-        const hash = await contract.methods.getMessageHash(address).call();
-        console.log("hash =", hash);
-        await web3.eth.personal.sign(hash,accounts[0],(err,res) =>{
-          ss = res;
-        })
+        // let ss;
+        // const hash = await contract.methods.getMessageHash(address).call();
+        // console.log("hash =", hash);
+        // await web3.eth.personal.sign(hash,accounts[0],(err,res) =>{
+        //   ss = res;
+        // })
 
         setaddresses([...addresses,address])
-        setsign([...sig,ss])
+        // setsign([...sig,ss])
         document.getElementById('addr').value = "";
       }else{
         alert("You are not an owner")
@@ -72,7 +73,7 @@ function ReservedUsers(){
   
         // Store links in variable
         linksArray.push(addresses[i]);
-        linksArray.push(sig[i]);
+        // linksArray.push(sig[i]);
 
         // Works fine in console
         console.log(linksArray);
@@ -122,20 +123,20 @@ function ReservedUsers(){
                                           <thead>
                                             <tr>
                                               <th scope="col">Address</th>
-                                              <th scope="col">Signature</th>
+                                              {/* <th scope="col">Signature</th> */}
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            {
-                                            addresses.map((value,index) => { 
-                                              let signs = sig[index];
-                                              if(addresses.length > 0 && sig.length > 0){ 
-                                            return <tr>
-                                              <td>{value}</td>
-                                              <td>{String(signs).substr(0, 20) + ".................." + String(signs).substr(120, String(signs).length)}</td>
-                                             </tr> 
-                                              }
-                                            })  
+                                            { !state ?
+                                              addresses.map((value,index) => { 
+                                                // let signs = sig[index];
+                                                if(addresses.length > 0){ 
+                                              return <tr>
+                                                <td>{value}</td>
+                                                {/* <td>{String(signs).substr(0, 20) + ".................." + String(signs).substr(120, String(signs).length)}</td> */}
+                                              </tr> 
+                                                }
+                                              })  : null
                                           }
                                           </tbody>
                                           {

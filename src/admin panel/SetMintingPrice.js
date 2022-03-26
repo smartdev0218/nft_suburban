@@ -1,6 +1,6 @@
 import React,{ useEffect, useState} from 'react'
 import { useStore } from '../context/GlobalState'
-import { SetTokenPrice } from '../store/asyncActions';
+import { SetTokenPrice, SetToken1Price } from '../store/asyncActions';
 import Loader from '../images/loader.gif';
 import { loadBlockchain } from '../store/asyncActions';
 
@@ -11,6 +11,7 @@ function SetMintingPrice(){
     const [isTransactionSuccessful , setTransactionSuccessful] = useState(false);
     const [transactionError , setTransactionError] = useState("");
     const[price,setprice] = useState(0);
+    const[price1,setprice1] = useState(0);
 
     useEffect(async()=>{
         await loadBlockchain(dispatch);
@@ -42,6 +43,31 @@ function SetMintingPrice(){
              setTransactionError(error.message); 
         }
    }
+
+   const handleSubmit1 = async (e)=>{
+    e.preventDefault();
+    console.log("Price =", price1)
+    
+    try {
+        setTransactionInprocess(true)
+        const newTransaction = {
+            _newprice: price1,
+        }
+        console.log("trx obj ",newTransaction)
+        await SetToken1Price(contract, accounts,newTransaction, dispatch);
+        
+        setTransactionInprocess(false);
+        setTransactionSuccessful(true);
+
+        window.location.reload()
+       
+      }catch (error){
+           console.log("error trax = ",error);
+           setTransactionInprocess(false);
+           setTransactionSuccessful(false);
+           setTransactionError(error.message); 
+      }
+    }
   
   return(
 
@@ -63,6 +89,32 @@ function SetMintingPrice(){
                                        <div className="form-group col-md-11">   
                                          <label for="inputEmail4"><h6>Enter Minting Price</h6></label>
                                          <input type="text" className="form-control" placeholder="0.02" step="0.001" onChange={(e)=>setprice(e.target.value)} required/>
+                                       <br/>
+                                       </div>
+                                        <div className="form-group col-md-11">
+                                          <button type="submit" className="btn btn-primary">SET PRICE</button>
+                                          &nbsp;
+                                          {isTransactionInProcess && <img width="40px" src={Loader} alt="Loading..." />} 
+                                          {isTransactionSuccessful == true ? <div style={{color:"green"}}></div>:null}
+                                          {!isTransactionSuccessful && <div style={{color:"red"}}>{transactionError}</div>}
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        
+                        </form>
+                  </div>
+
+                  <div class="card-body">
+                      <form onSubmit={(e)=>handleSubmit1(e)}>
+                            
+                            <div className="form-row d-flex justify-content-center">
+                                <div className="form-group col-md-6">
+                                    <div className="form-row">
+                                       <div className="form-group col-md-11">   
+                                         <label for="inputEmail4"><h6>Enter White Minting Price</h6></label>
+                                         <input type="text" className="form-control" placeholder="0.02" step="0.001" onChange={(e)=>setprice1(e.target.value)} required/>
                                        <br/>
                                        </div>
                                         <div className="form-group col-md-11">

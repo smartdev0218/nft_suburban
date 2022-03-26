@@ -11,6 +11,7 @@ const initialState = {
   contract: null,
   total_mint: 0,
   token_price: 0,
+  token_price1: 0,
   user_reserved: 0,
   owner_account: 0,
   launch_time:0,

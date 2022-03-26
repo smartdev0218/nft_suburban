@@ -11,7 +11,7 @@ import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Wallet from "./Wallet";
 import Dashboard from "./Dashboard";
-import { NoEthereumProviderError } from "@web3-react/injected-connector";
+import { ADDRESS, ABI } from '../contract/SmartContract';
 
 function MainSection(){
     // const [{ accounts }, dispatch] = useStore();
@@ -22,7 +22,7 @@ function MainSection(){
     const [label2, setLabel2] = useState("Robots NFT Mint date: April 7th");
     const [label3, setLabel3] = useState("Official NFT Collection");
     const [label4, setLabel4] = useState("MINTING LIVE ");
-
+    const [total_mint1, setMint] = useState(0);
 
     const providerOptions = {
         metamask: {
@@ -88,6 +88,11 @@ function MainSection(){
             const web3 = new Web3(provider);
             const acc = await web3.eth.getAccounts();
             setAccount(acc[0]);
+            const contract = new web3.eth.Contract(ABI, ADDRESS);
+            const t_mint = await contract.methods.totalSupply().call();
+            setMint(t_mint);
+            console.log(t_mint);
+
         } catch(error) {
             if(error.message == "User rejected") window.location.reload();
         }
@@ -202,7 +207,7 @@ function MainSection(){
             </section>
         </div>
         {
-            ( distance > 1 ) ? <></> : <Wallet account = {account} />
+            ( distance > 1 ) ? <></> : <Wallet account = {account} total_mint1 = {total_mint1}/>
         }
         {
             ( distance > 1 ) ? <></> : <Dashboard account = {account}/>

@@ -43,6 +43,13 @@ export const mintPrice = (value) => {
     };
 }
 
+export const whiteMintPrice = (value) => {
+    return {
+        type: 'WHITE_MINT_PRICE',
+        payload: value
+    };
+}
+
 export const userReserved = (value) => {
     return {
         type: 'USER_RESERVED',
