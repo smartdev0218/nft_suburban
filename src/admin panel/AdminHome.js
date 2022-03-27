@@ -53,7 +53,7 @@ function AdminHome(){
                   </div>
 
 
-                  <div className="col-lg-4">
+                  {/* <div className="col-lg-4">
                     <div className="card card-chart">
                       <div className="card-header">
                         <h4 className="card-title">Launch Time</h4> 
@@ -67,7 +67,7 @@ function AdminHome(){
                       </div>
                     </div>
                     <br/>
-                  </div>
+                  </div> */}
 
 
                   <div className="col-lg-4">
@@ -86,6 +86,22 @@ function AdminHome(){
                     <br/>
                   </div>
           
+                  <div className="col-lg-4">
+                    <div className="card card-chart">
+                      <div className="card-header">
+                        <h4 className="card-title">Whitelist Price</h4> 
+                      </div>
+                      <div className="card-footer">
+                        <div className="float-right">
+                           <div className="stats">
+                           <h5>{token_price1 / 10**18}</h5>
+                           </div>
+                       </div>
+                      </div>
+                    </div>
+                    <br/>
+                  </div>
+
                   <div className="col-lg-4">
                     <div className="card card-chart">
                       <div className="card-header">
@@ -118,22 +134,6 @@ function AdminHome(){
                     <br/>
                   </div>
 
-
-                  <div className="col-lg-4">
-                    <div className="card card-chart">
-                      <div className="card-header">
-                        <h4 className="card-title">White Minting Price</h4> 
-                      </div>
-                      <div className="card-footer">
-                        <div className="float-right">
-                           <div className="stats">
-                           <h5>{token_price1 / 10**18}</h5>
-                           </div>
-                       </div>
-                      </div>
-                    </div>
-                    <br/>
-                  </div>
 
                   <div className="col-lg-4">
                     <div className="card card-chart">

@@ -1,14 +1,9 @@
 
-export const ADDRESS = '0x63a3419b748aE7C18B439930170F21d965Dfe24a'
+export const ADDRESS = '0xb1CBF2F7963c277D3D2eCaDa08f1Eccd06933075'
 
 export const ABI = [
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_launchedAt",
-        "type": "uint256"
-      },
       {
         "internalType": "uint256",
         "name": "_reserved",
@@ -243,19 +238,6 @@ export const ABI = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "launchedAt",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -355,24 +337,6 @@ export const ABI = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes",
-        "name": "_signature",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint256",
-        "name": "quantity",
-        "type": "uint256"
-      }
-    ],
-    "name": "presaleMint",
-    "outputs": [],
-    "stateMutability": "payable",
     "type": "function"
   },
   {
