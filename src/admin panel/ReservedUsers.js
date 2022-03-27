@@ -122,7 +122,7 @@ function ReservedUsers(){
                                     <table className="table">
                                           <thead>
                                             <tr>
-                                              <th scope="col">Address</th>
+                                              <th scope="col">Whitelisted Address</th>
                                               {/* <th scope="col">Signature</th> */}
                                             </tr>
                                           </thead>

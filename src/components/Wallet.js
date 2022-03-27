@@ -5,9 +5,10 @@ import { useStore } from '../context/GlobalState';
 import { UserMint } from "../store/asyncActions";
 import Web3 from "web3";
 import { ADDRESS, ABI } from '../contract/SmartContract';
+import { loadBlockchain } from '../store/asyncActions';
 
 function Wallet(props){
-    const [{ accounts,contract,total_mint,user_reserved,token_price,launch_time, connect}, dispatch] = useStore();
+    const [{ accounts,contract,total_mint,user_reserved,token_price, token_price1,launch_time, connect}, dispatch] = useStore();
     const [quantity,setquantity] = useState(1)
     const [isTransactionInProcess, setTransactionInprocess] = useState(false);
     const [isTransactionSuccessful , setTransactionSuccessful] = useState(false);
@@ -31,7 +32,9 @@ function Wallet(props){
     useEffect(async () => {
         // const web3 = new Web3(Web3.givenProvider);
         // setAccount(await web3.eth.getAccounts());
-    })
+        await loadBlockchain(dispatch);
+    }, accounts[0])
+
     const handleSubmit = async (e) =>{
 
         e.preventDefault();
@@ -44,19 +47,15 @@ function Wallet(props){
             }
         })
         
-        
         const web3 = new Web3(Web3.givenProvider);
-        // setAccount(await web3.eth.getAccounts());
-        // const account = await web3.eth.getAccounts()
-        // console.log(account[0]);
 
-        //white mint
+        // white mint
         if(checkAddress() == true) {
             const contract = new web3.eth.Contract(ABI, ADDRESS);
-            await contract.methods.mintByWhilteAdress(quantity)
+            await contract.methods.mintByWhiteAdress(quantity)
             .send({
                 from: props.account,
-                value: quantity * 60000000000000000,
+                value: quantity  * token_price1,
             });
         }
         //Normal mint
@@ -65,56 +64,9 @@ function Wallet(props){
             await contract.methods.mintByUser(quantity)
             .send({
                 from: props.account,
-                value: quantity * 70000000000000000,
+                value: quantity * token_price,
             });
         }
-        
-        // const contract = new web3.eth.Contract(ABI, ADDRESS);
-        // await contract.methods.mintByUser(quantity)
-        // .send({
-        //     from: accounts[0],
-        //     value: quantity * 70000000000000000,
-        // });
-
-        // if((quantity < 1) || (quantity > 3)){
-        //     alert("Invalid Mint Quantity!")
-        // }
-    
-        // else if(Number(total_mint) >= 2199 - user_reserved){
-        //     alert("Public Sale Limit is Ended!")
-        // }
-
-        //  else if(Number(total_mint) + Number(quantity) > (2199 - user_reserved)){
-        //     alert("Max Limit To Total Sale!")
-        // }
-         
-        // else{
-        //    const total_amount = token_price * quantity;    
-        //    console.log(total_amount);
-        //    //setTransactionSuccessful(true);
-        //    setTransactionError("");
-         
-        //     try {
-        //         setTransactionInprocess(true)
-        //         const newTransaction = {
-        //             quantity: quantity,
-        //             total_amount: total_amount
-        //         }
-        //         console.log("trx obj ",newTransaction)
-        //         await UserMint(contract, accounts,newTransaction, dispatch);
-                
-        //         setTransactionInprocess(false);
-        //         setTransactionSuccessful(true);
-        //         document.getElementById('mintBox').value = ''
-
-        //     }catch (error){
-        //         console.log("error trax = ",error);
-        //         setTransactionInprocess(false);
-        //         setTransactionSuccessful(false);
-        //         setTransactionError(error.message); 
-        //     }
-         
-        // }
         
     }
     

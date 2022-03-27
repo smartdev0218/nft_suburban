@@ -9,7 +9,10 @@ function SetMintingPrice(){
     const [{accounts,contract}, dispatch] = useStore();
     const [isTransactionInProcess, setTransactionInprocess] = useState(false);
     const [isTransactionSuccessful , setTransactionSuccessful] = useState(false);
+    const [isTransactionInProcess1, setTransactionInprocess1] = useState(false);
+    const [isTransactionSuccessful1, setTransactionSuccessful1] = useState(false);
     const [transactionError , setTransactionError] = useState("");
+    const [transactionError1 , setTransactionError1] = useState("");
     const[price,setprice] = useState(0);
     const[price1,setprice1] = useState(0);
 
@@ -49,23 +52,23 @@ function SetMintingPrice(){
     console.log("Price =", price1)
     
     try {
-        setTransactionInprocess(true)
+        setTransactionInprocess1(true)
         const newTransaction = {
             _newprice: price1,
         }
         console.log("trx obj ",newTransaction)
         await SetToken1Price(contract, accounts,newTransaction, dispatch);
         
-        setTransactionInprocess(false);
-        setTransactionSuccessful(true);
+        setTransactionInprocess1(false);
+        setTransactionSuccessful1(true);
 
         window.location.reload()
        
       }catch (error){
            console.log("error trax = ",error);
-           setTransactionInprocess(false);
-           setTransactionSuccessful(false);
-           setTransactionError(error.message); 
+           setTransactionInprocess1(false);
+           setTransactionSuccessful1(false);
+           setTransactionError1(error.message); 
       }
     }
   
@@ -120,9 +123,9 @@ function SetMintingPrice(){
                                         <div className="form-group col-md-11">
                                           <button type="submit" className="btn btn-primary">SET PRICE</button>
                                           &nbsp;
-                                          {isTransactionInProcess && <img width="40px" src={Loader} alt="Loading..." />} 
-                                          {isTransactionSuccessful == true ? <div style={{color:"green"}}></div>:null}
-                                          {!isTransactionSuccessful && <div style={{color:"red"}}>{transactionError}</div>}
+                                          {isTransactionInProcess1 && <img width="40px" src={Loader} alt="Loading..." />} 
+                                          {isTransactionSuccessful1 == true ? <div style={{color:"green"}}></div>:null}
+                                          {!isTransactionSuccessful1 && <div style={{color:"red"}}>{transactionError1}</div>}
                                         </div>
                                     </div>
                                 </div>
