@@ -8,7 +8,7 @@ import { ADDRESS, ABI } from '../contract/SmartContract';
 import { loadBlockchain } from '../store/asyncActions';
 
 function Wallet(props){
-    const [{ accounts,contract,total_mint,user_reserved,token_price, token_price1,launch_time, connect}, dispatch] = useStore();
+    const [{ accounts,owner_account,contract,total_mint,user_reserved,token_price, token_price1,launch_time, connect}, dispatch] = useStore();
     const [quantity,setquantity] = useState(1)
     const [isTransactionInProcess, setTransactionInprocess] = useState(false);
     const [isTransactionSuccessful , setTransactionSuccessful] = useState(false);
@@ -49,8 +49,11 @@ function Wallet(props){
         
         const web3 = new Web3(Web3.givenProvider);
 
+        //owner
+        if(props.account == owner_account) alert("You are owner!");
+        
         // white mint
-        if(checkAddress() == true) {
+        else if(checkAddress() == true) {
             const contract = new web3.eth.Contract(ABI, ADDRESS);
             await contract.methods.mintByWhiteAdress(quantity)
             .send({

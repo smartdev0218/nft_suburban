@@ -16,6 +16,7 @@ import { ADDRESS, ABI } from '../contract/SmartContract';
 function MainSection(){
     // const [{ accounts }, dispatch] = useStore();
     // const [status, setStatus] = useState("Connect");
+    //Apr 07, 2022 19:00:00 GMT+0000
     const [account, setAccount] = useState();
     const [distance, setDistance] = useState(new Date("Mar 26, 2022 23:32:00") - new Date().getTime());
     const [label1, setLabel1] = useState("Rebels NFT Collection SOLD OUT");

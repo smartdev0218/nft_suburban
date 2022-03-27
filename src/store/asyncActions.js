@@ -39,10 +39,6 @@ export const loadBlockchain = async(dispatch) =>{
              console.log("user Reserved", userreserved);
              dispatch(userReserved(userreserved))
 
-             const launchtime = await contract.methods.launchedAt().call()
-             console.log("launch time", launchtime);
-             dispatch(launchTime(launchtime))
-
              const owneraccount = await contract.methods.owner().call()
              console.log("owner account", owneraccount);
              dispatch(ownerAccount(owneraccount))
