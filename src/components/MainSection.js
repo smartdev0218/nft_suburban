@@ -66,6 +66,12 @@ function MainSection(){
             }
         }
     } : {
+        metamask: {
+            id: "injected",
+            name: "MetaMask",
+            type: "injected",
+            check: "isMetaMask",
+        },
         walletconnect: {
             package: WalletConnectProvider, // required
             options: {
@@ -95,10 +101,6 @@ function MainSection(){
         theme: "dark"
     });
 
-    const isMetaMaskInstalled = () => {
-        return Boolean(ethereum && ethereum.isMetaMask);
-    };
-
     useEffect(async () => {
         if(web3Modal.cachedProvider) {
             connectButton();
@@ -120,8 +122,7 @@ function MainSection(){
     }, [distance])
 
     const connectButton =  async () => {          
-        
-        // try {
+        try {
             const provider = await web3Modal.connect();
             const web3 = new Web3(provider);
             const acc = await web3.eth.getAccounts();
@@ -131,9 +132,9 @@ function MainSection(){
             setMint(t_mint);
             console.log(t_mint);
 
-        // } catch(error) {
-        //     if(error.message == "User rejected") window.location.reload();
-        // }
+        } catch(error) {
+            if(error.message == "User rejected") window.location.reload();
+        }
     };
     
     const disconnectButton = async () => {

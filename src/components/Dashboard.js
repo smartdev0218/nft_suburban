@@ -28,10 +28,6 @@ function Dashboard(props){
     //         console.error(error);
     //     });
     // },5000)
-
-    
-
-
     
 
      useEffect(async ()=> {
