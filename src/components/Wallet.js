@@ -14,7 +14,7 @@ function Wallet(props){
     const [isTransactionSuccessful , setTransactionSuccessful] = useState(false);
     const [transactionError , setTransactionError] = useState("");
     const [addresses, setAddresses] = useState([]);
-    // const [account, setAccount] = useState([]);
+    const [account, setAccount] = useState([]);
 
     const styles = {
         color: 'white'
@@ -30,15 +30,17 @@ function Wallet(props){
     }
 
     useEffect(async () => {
-        // const web3 = new Web3(Web3.givenProvider);
-        // setAccount(await web3.eth.getAccounts());
-        await loadBlockchain(dispatch);
-    }, accounts[0])
+        const web3 = new Web3(Web3.givenProvider);
+        setAccount(await web3.eth.getAccounts());
+        // await loadBlockchain(dispatch);
+    }, account[0])
 
     const handleSubmit = async (e) =>{
 
         e.preventDefault();
         
+        await loadBlockchain(dispatch);
+
         await fetch("https://api.allorigins.win/raw?url=http://localhost:5000/find/")
         .then(response => response.json())
         .then(data => {
@@ -53,7 +55,7 @@ function Wallet(props){
         if(props.account == owner_account) alert("You are owner!");
         
         // white mint
-        else if(checkAddress() == true) {
+        if(checkAddress() == true) {
             const contract = new web3.eth.Contract(ABI, ADDRESS);
             await contract.methods.mintByWhiteAdress(quantity)
             .send({

@@ -10,6 +10,7 @@ function AdminLogin(){
   const handleSubmit = (e) => {
     
       e.preventDefault()
+      
       if(accounts[0] === owner_account && pass === window.localStorage.getItem("admin_pass")){
          window.localStorage.setItem("admin_login","true");
          window.location.href="/admin"
