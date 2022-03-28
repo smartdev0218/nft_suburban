@@ -83,10 +83,14 @@ function MainSection(){
             }
         },
         walletlink: {
-            package: CoinbaseWalletSDK,
+            package: WalletLink,
             options: {
-                appName: "",
-                infuraId: "223f20f418c34a758240a7f416435110"
+                appName: "My Coinbase App",
+                infuraId: "223f20f418c34a758240a7f416435110",
+                rpc: "",
+                chainId: 1,
+                appLogoUrl: null,
+                darkMode: false
             }
         },
         authereum: {

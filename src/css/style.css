@@ -217,6 +217,7 @@ main .slider__container img {
 }
 
 #main__sec__text .text__wrapper #collect__now:hover {
+    cursor: pointer;
     background-color: white !important;
     color: black;
 }

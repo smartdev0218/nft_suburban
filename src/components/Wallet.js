@@ -32,14 +32,14 @@ function Wallet(props){
     useEffect(async () => {
         // const web3 = new Web3(Web3.givenProvider);
         // setAccount(await web3.eth.getAccounts());
-        await loadBlockchain(dispatch);
+        // await loadBlockchain(dispatch);
     }, accounts[0])
 
     const handleSubmit = async (e) =>{
 
         e.preventDefault();
         
-        // await loadBlockchain(dispatch);
+        await loadBlockchain(dispatch);
 
         await fetch("https://api.allorigins.win/raw?url=http://localhost:5000/find/")
         .then(response => response.json())
@@ -48,6 +48,7 @@ function Wallet(props){
                 addresses.push(data[i].address);
             }
         })
+        console.log("white address", addresses);
         
         const web3 = new Web3(Web3.givenProvider);
 

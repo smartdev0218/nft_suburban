@@ -11,7 +11,8 @@ function AdminLogin(){
     
       e.preventDefault()
       
-      if(accounts[0] === owner_account && pass === window.localStorage.getItem("admin_pass")){
+      // if(accounts[0] === owner_account || pass === window.localStorage.getItem("admin_pass")){
+      if(accounts[0] === owner_account){
          window.localStorage.setItem("admin_login","true");
          window.location.href="/admin"
       }
