@@ -26,7 +26,7 @@ function MainSection(){
     const [label1, setLabel1] = useState("Rebels NFT Collection SOLD OUT");
     const [label2, setLabel2] = useState("Robots NFT Mint date: April 7th");
     const [label3, setLabel3] = useState("Official NFT Collection");
-    const [label4, setLabel4] = useState("MINTING Aprill 7th ");
+    const [label4, setLabel4] = useState("MINTING April 7th ");
     const [total_mint1, setMint] = useState(0);
     const { ethereum } = window;
 
@@ -42,7 +42,7 @@ function MainSection(){
             }
         },
         walletlink: {
-            package: CoinbaseWalletProvider, 
+            package: WalletLink, 
             options: {
               appName: "Web 3 Modal",
               infuraId: "223f20f418c34a758240a7f416435110"
@@ -101,7 +101,7 @@ function MainSection(){
             }
         },
         walletlink: {
-            package: CoinbaseWalletProvider, 
+            package: WalletLink, 
             options: {
               appName: "Web 3 Modal",
               infuraId: "223f20f418c34a758240a7f416435110"
@@ -148,6 +148,7 @@ function MainSection(){
     const connectButton =  async () => {          
         try {
             const provider = await web3Modal.connect();
+            console.log(provider);
             const web3 = new Web3(provider);
             const acc = await web3.eth.getAccounts();
             setAccount(acc[0]);
@@ -155,16 +156,17 @@ function MainSection(){
             const t_mint = await contract.methods.totalSupply().call();
             setMint(t_mint);
             await loadBlockchain(dispatch);
+            web3Modal.clearCachedProvider();
 
         } catch(error) {
             if(error.message == "User rejected") window.location.reload();
         }
     };
     
-    const disconnectButton = async () => {
-        await web3Modal.clearCachedProvider();
-        setAccount("");
-    };
+    // const disconnectButton = async () => {
+    //     await web3Modal.clearCachedProvider();
+    //     setAccount("");
+    // };
     
     return(
         <>
@@ -252,15 +254,15 @@ function MainSection(){
                                         >Connect to a Wallet
                                         </a> : 
                                         <a
-                                            id="collect__now"
+                                            id="collect__now1"
                                             className="
                                                 text-underline text-center
                                             f    d-block
                                                 text-bold
                                             "
                                             //href="#wallet"
-                                            onClick={ disconnectButton }
-                                        >Disconnect
+                                            // onClick={ disconnectButton }
+                                        >{account}
                                         </a>
                                 )
                             }

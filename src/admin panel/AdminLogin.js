@@ -1,18 +1,22 @@
 import React,{ useState, useEffect } from 'react';
 import { useStore } from '../context/GlobalState';
 import { loadBlockchain } from '../store/asyncActions';
+import Web3 from "web3";
+import { ADDRESS, ABI } from '../contract/SmartContract';
 
 function AdminLogin(){
   
  const[pass,setpass] = useState("")
- const [{accounts, owner_account}, dispatch] = useStore();
+//  const [{accounts, owner_account}, dispatch] = useStore();
+  const[account, setAccount] = useState(0);
+  const[o_account, setOwner] = useState(0);
 
   const handleSubmit = (e) => {
     
       e.preventDefault()
       
       // if(accounts[0] === owner_account || pass === window.localStorage.getItem("admin_pass")){
-      if(accounts[0] === owner_account){
+      if(account === o_account){
          window.localStorage.setItem("admin_login","true");
          window.location.href="/admin"
       }
@@ -25,8 +29,14 @@ function AdminLogin(){
   }
 
   useEffect(async()=>{
-    await loadBlockchain(dispatch);
-  },[accounts[0]]);
+    // await loadBlockchain(dispatch);
+    const web3 = new Web3(Web3.givenProvider);
+    const acc = await web3.eth.getAccounts();
+    setAccount(acc[0]);
+    const contract = new web3.eth.Contract(ABI, ADDRESS);
+    const o_addr = await contract.methods.owner().call();
+    setOwner(o_addr);
+  },[account]);
 
     return(
       
@@ -45,7 +55,7 @@ function AdminLogin(){
           <div className="form-row">
             
             <div className="form-group col-md-12"> 
-              <input type="text" className="form-control fadeIn second" style={{fontSize:'13px'}} disabled value={accounts[0]} />
+              <input type="text" className="form-control fadeIn second" style={{fontSize:'13px'}} disabled value={account} />
               <br/>
             </div>
           

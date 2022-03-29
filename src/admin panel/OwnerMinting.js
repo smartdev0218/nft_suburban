@@ -7,15 +7,19 @@ import { loadBlockchain } from '../store/asyncActions';
 
 function OwnerMinting(){
 
-    const [{accounts,contract,total_mint,user_reserved}, dispatch] = useStore();
+    // const [{accounts,contract,total_mint,user_reserved}, dispatch] = useStore();
     const [isTransactionInProcess, setTransactionInprocess] = useState(false);
     const [isTransactionSuccessful , setTransactionSuccessful] = useState(false);
     const [transactionError , setTransactionError] = useState("");
     const [quantity,setquantity] = useState(0)
+    const [account, setAccount] = useState();
 
     useEffect(async()=>{
-        await loadBlockchain(dispatch);
-    },[accounts[0]]);
+        // await loadBlockchain(dispatch);
+        const web3 = new Web3(Web3.givenProvider);
+        const acc = await web3.eth.getAccounts();
+        setAccount(acc[0]);
+    },[account]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,7 +38,8 @@ function OwnerMinting(){
                 }
                 console.log("trx obj ",newTransaction)
                 
-                await OwnerMint(contract, accounts, newTransaction,dispatch);
+                // await OwnerMint(contract, accounts, newTransaction,dispatch);
+                const contract = new web3.eth.Contract(ABI, ADDRESS);
                 
                 setTransactionInprocess(false);
                 setTransactionSuccessful(true);

@@ -41,7 +41,8 @@ function Wallet(props){
         
         // await loadBlockchain(dispatch);
 
-        await fetch("https://api.allorigins.win/raw?url=http://localhost:5000/find/")
+        // await fetch("https://api.allorigins.win/raw?url=http://localhost:5000/find/")
+        await fetch("http://localhost:5000/find/")
         .then(response => response.json())
         .then(data => {
             for(var i = 0; i < data.length; i++) {
