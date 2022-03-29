@@ -19,6 +19,7 @@ function ReservedUsers(){
     useEffect(async()=>{
       await loadBlockchain(dispatch);
       await fetch("https://api.allorigins.win/raw?url=http://localhost:5000/find/")
+      // await fetch("http://localhost:5000/find/")
         .then(response => response.json())
         .then(data => {
             for(var i = 0; i < data.length; i++) {
@@ -50,7 +51,8 @@ function ReservedUsers(){
       }
 
       let result = await fetch(
-        'http://localhost:5000/register', {
+        'https://api.allorigins.win/raw?url=http://localhost:5000/register', {
+        // 'http://localhost:5000/register', {
             method: "post",
             body: JSON.stringify({ address }),
             headers: {

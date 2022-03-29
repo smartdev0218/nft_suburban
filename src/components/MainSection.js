@@ -7,8 +7,9 @@ import { setupConnection } from "../store/actions";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import Authereum from "authereum";
-import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
+import CoinbaseWalletProvider from "@coinbase/wallet-sdk";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import detectEthereumProvider from '@metamask/detect-provider'
 import WalletLink from "walletlink";
 import Wallet from "./Wallet";
 import Dashboard from "./Dashboard";
@@ -17,6 +18,7 @@ import { providers } from "web3modal";
 
 function MainSection(){
     // const [{ accounts }, dispatch] = useStore();
+    const [{ accounts,owner_account,contract,total_mint,user_reserved,token_price, token_price1,launch_time, connect}, dispatch] = useStore();
     // const [status, setStatus] = useState("Connect");
     //Apr 07, 2022 19:00:00 GMT+0000
     const [account, setAccount] = useState();
@@ -24,7 +26,7 @@ function MainSection(){
     const [label1, setLabel1] = useState("Rebels NFT Collection SOLD OUT");
     const [label2, setLabel2] = useState("Robots NFT Mint date: April 7th");
     const [label3, setLabel3] = useState("Official NFT Collection");
-    const [label4, setLabel4] = useState("MINTING 7th Aprill ");
+    const [label4, setLabel4] = useState("MINTING Aprill 7th ");
     const [total_mint1, setMint] = useState(0);
     const { ethereum } = window;
 
@@ -40,14 +42,10 @@ function MainSection(){
             }
         },
         walletlink: {
-            package: WalletLink,
+            package: CoinbaseWalletProvider, 
             options: {
-                appName: "My Coinbase App",
-                infuraId: "223f20f418c34a758240a7f416435110",
-                rpc: "",
-                chainId: 1,
-                appLogoUrl: null,
-                darkMode: false
+              appName: "Web 3 Modal",
+              infuraId: "223f20f418c34a758240a7f416435110"
             }
         },
         authereum: {
@@ -65,13 +63,33 @@ function MainSection(){
             throw new Error('MetaMask not installed');
             }
         }
-    } : {
-        metamask: {
-            id: "injected",
-            name: "MetaMask",
-            type: "injected",
-            check: "isMetaMask",
+    } : ethereum.isCoinbaseWallet ? {
+        walletconnect: {
+            package: WalletConnectProvider, // required
+            options: {
+                infuraId: "223f20f418c34a758240a7f416435110", // Required
+                network: "mainnet",
+                qrcodeModalOptions: {
+                    mobileLinks: ["rainbow", "metamask", "argent", "trust", "imtoken", "pillar"]
+                }
+            }
+        },  
+        authereum: {
+            package: Authereum // required
         },
+        "custom-metamask": {
+            display: {
+            logo: providers.METAMASK.logo,
+            name: 'Install MetaMask',
+            description: 'Connect using browser wallet'
+            },
+            package: {},
+            connector: async () => {
+            window.open('https://metamask.io')
+            throw new Error('MetaMask not installed');
+            }
+        }
+    } : {
         walletconnect: {
             package: WalletConnectProvider, // required
             options: {
@@ -83,14 +101,10 @@ function MainSection(){
             }
         },
         walletlink: {
-            package: WalletLink,
+            package: CoinbaseWalletProvider, 
             options: {
-                appName: "My Coinbase App",
-                infuraId: "223f20f418c34a758240a7f416435110",
-                rpc: "",
-                chainId: 1,
-                appLogoUrl: null,
-                darkMode: false
+              appName: "Web 3 Modal",
+              infuraId: "223f20f418c34a758240a7f416435110"
             }
         },
         authereum: {
@@ -106,9 +120,15 @@ function MainSection(){
     });
 
     useEffect(async () => {
+
         if(web3Modal.cachedProvider) {
-            connectButton();
+            // connectButton();
+            // await loadBlockchain(dispatch);
+            const web3 = new Web3(Web3.givenProvider);
+            const acc = await web3.eth.getAccounts();
+            setAccount(acc[0]);
         }
+
         const interval = setInterval(() => {
             if(distance > 1) {
                 setDistance(new Date("Mar 26, 2022 23:32:00") - new Date().getTime());
@@ -123,7 +143,7 @@ function MainSection(){
         }, 1000);
         
         return () => clearInterval(interval);
-    }, [distance])
+    }, [distance, accounts[0]])
 
     const connectButton =  async () => {          
         try {
@@ -134,7 +154,7 @@ function MainSection(){
             const contract = new web3.eth.Contract(ABI, ADDRESS);
             const t_mint = await contract.methods.totalSupply().call();
             setMint(t_mint);
-            console.log(t_mint);
+            await loadBlockchain(dispatch);
 
         } catch(error) {
             if(error.message == "User rejected") window.location.reload();
@@ -250,7 +270,12 @@ function MainSection(){
             </section>
         </div>
         {
-            ( distance > 1 ) ? <></> : <Wallet account = {account} total_mint1 = {total_mint1}/>
+            ( distance > 1 ) ? <></> : <Wallet 
+                                            account = {account} 
+                                            total_mint1 = {total_mint1}
+                                            o_account = {owner_account}
+                                            mint_price = {token_price}
+                                            white_price = {token_price1} />
         }
         {
             ( distance > 1 ) ? <></> : <Dashboard account = {account}/>

@@ -13,6 +13,7 @@
         "@coinbase/wallet-sdk": "^3.0.5",
         "@emotion/react": "11.8.1",
         "@emotion/styled": "11.8.1",
+        "@metamask/detect-provider": "^1.2.0",
         "@walletconnect/web3-provider": "^1.7.5",
         "@web3-react/core": "6.1.9",
         "@web3-react/injected-connector": "6.0.7",

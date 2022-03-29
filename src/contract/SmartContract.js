@@ -1,4 +1,3 @@
-
 export const ADDRESS = '0x00044EB5738FD38F62194BCCDe30AfBfBF9532A3'
 
 export const ABI = [
