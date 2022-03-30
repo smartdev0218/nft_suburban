@@ -5,14 +5,20 @@ import { ADDRESS, ABI } from '../contract/SmartContract';
 const web3 = new Web3(Web3.givenProvider);
 
 export const loadBlockchain = async(dispatch) =>{
+    // const web3 = !ethereum ? null : 
+    //             (ethereum.isCoinbaseWallet && !ethereum.isMetaMask) ? new Web3(Web3.givenProvider) : 
+    //             (!ethereum.isCoinbaseWallet && ethereum.isMetaMask) ? new Web3(Web3.givenProvider) : new Web3(Web3.givenProvider.providers[2]);
+
     try {
         console.log("Web3 = ",Web3);
         console.log("Web3.givenProvider = ",Web3.givenProvider);
 
         if(Web3.givenProvider){
-    
+        
+            (Web3.givenProvider.providers.length === 3 ) ? await Web3.givenProvider.providers[2].enable() : await Web3.givenProvider.enable();
             // await Web3.givenProvider.enable();
-            console.log("Web3.givenProvider enable= ",Web3.givenProvider);
+            console.log("Web3.givenProvider enable= ", Web3.givenProvider);
+
             dispatch(setupWeb3(web3));
             
             const contract = new web3.eth.Contract(ABI,ADDRESS);
@@ -27,7 +33,6 @@ export const loadBlockchain = async(dispatch) =>{
             const totalminted = await contract.methods.totalSupply().call()
              console.log("total supply", totalminted);
              dispatch(totalMinted(totalminted))
-
 
              const mintprice = await contract.methods.mintPrice().call()
              console.log("minting Price", mintprice);

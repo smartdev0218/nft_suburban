@@ -19,23 +19,14 @@ function ReservedUsers(){
     useEffect(async()=>{
       await loadBlockchain(dispatch);
       // await fetch("https://api.allorigins.win/raw?url=http://localhost:5000/find/")
-      // await fetch("http://localhost:5000/find/")
-      //   .then(response => response.json())
-      //   .then(data => {
-      //       for(var i = 0; i < data.length; i++) {
-      //           addresses.push(data[i].address);
-      //       }
-      //       SetState(false);
-      //   })
-      //   console.log(state);
-      await axios
-      .get('http://localhost:5000/api/find')
-      .then(res => {
-        for(var i = 0; i < res.data.length; i++) {
-          // setaddresses([...addresses, res.data[i].wladdress]);
-          addresses.push(res.data[i].wladdress);
-        }
-      })
+      await fetch("http://localhost:5000/api/find/")
+        .then(response => response.json())
+        .then(data => {
+            for(var i = 0; i < data.length; i++) {
+                addresses.push(data[i].address);
+            }
+            SetState(false);
+        })
       SetState(false);
     },[accounts[0]]);
 
@@ -59,29 +50,21 @@ function ReservedUsers(){
         alert("You are not an owner")
       }
 
-      // let result = await fetch(
-      //   // 'https://api.allorigins.win/raw?url=http://localhost:5000/register', {
-      //   'http://localhost:5000/register', {
-      //       method: "post",
-      //       body: JSON.stringify({ address }),
-      //       headers: {
-      //           'Content-Type': 'application/json'
-      //       }
-      //   })
-      //   result = await result.json();
-      //   console.warn(result);
-      //   if (result) {
-      //       alert("Data saved successfully");
-      //       setaddress("");
-      //   }
-
-      const addr = { wladdress: address }
-      await axios
-      .post('http://localhost:5000/api/register', addr)
-      .then((res) => {
-        
-      })
-      .catch((err) => console.log(err));
+      let result = await fetch(
+        // 'https://api.allorigins.win/raw?url=http://localhost:5000/register', {
+        'http://localhost:5000/api/register', {
+            method: "post",
+            body: JSON.stringify({ address }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        result = await result.json();
+        console.warn(result);
+        if (result) {
+            alert("Data saved successfully");
+            setaddress("");
+        }
     }
 
     const handleSubmit = async () => {

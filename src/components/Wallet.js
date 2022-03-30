@@ -43,20 +43,11 @@ function Wallet(props){
         // await loadBlockchain(dispatch);
 
         // await fetch("https://api.allorigins.win/raw?url=http://localhost:5000/find/")
-        // await fetch("http://localhost:5000/find/")
-        // .then(response => response.json())
-        // .then(data => {
-        //     for(var i = 0; i < data.length; i++) {
-        //         addresses.push(data[i].address);
-        //     }
-        // })
-        await axios
-        .get('http://localhost:5000/api/find')
-        .then(res => {
-            // console.log(res.data.length);
-            for(var i = 0; i < res.data.length; i++) {
-                // setAddresses([...addresses, res.data[i].wladdress]);
-                addresses.push(res.data[i].wladdress);
+        await fetch("http://localhost:5000/api/find/")
+        .then(response => response.json())
+        .then(data => {
+            for(var i = 0; i < data.length; i++) {
+                addresses.push(data[i].address);
             }
         })
         console.log("white address= ", addresses);
@@ -115,7 +106,7 @@ function Wallet(props){
                     <div className="col-12 mt-4">
                         {/* <!-- para  --> */}
                         { props.account ? <p className="para text-center mb-0 mb-lg-1">Total NFTs mint until now: {props.total_mint1}/1145</p> : null} 
-                        <p className="para text-center">Minting fee for 1 NFT = 0.07 ETH / 0.06 ETH WL</p>
+                        <p className="para text-center">Minting fee for 1 NFT = {props.mint_price / 10**18} ETH / {props.white_price / 10**18} ETH WL</p>
                         {/* <!-- button  --> */}
                         <div className="btn-wrap text-center">
                             <a href="" className="cus_btn text-uppercase text-white text-center" onClick={handleSubmit}>buy</a>

@@ -1,41 +1,44 @@
 import React,{ useState, useEffect } from 'react';
 import { useStore } from '../context/GlobalState';
 import { loadBlockchain } from '../store/asyncActions';
+import Web3 from "web3";
+import { ADDRESS, ABI } from '../contract/SmartContract';
 
 function AdminLogin(){
   
- const[pass,setpass] = useState("")
- const [{accounts, owner_account}, dispatch] = useStore();
+  const[pass,setpass] = useState("")
+  const [{accounts, owner_account}, dispatch] = useStore();
 
- useEffect(async()=>{
-  await loadBlockchain(dispatch);
-},[accounts[0]]);
+  useEffect(async()=>{
+    await loadBlockchain(dispatch);
+    console.log("onwer_account= ", owner_account);
+  },[accounts[0]]);
 
-  const handleSubmit = (e) => {
-    
+  const handleSubmit = async (e) => {
       e.preventDefault()
       
+      // const web3 = new Web3(Web3.givenProvider.providers[2]);
+      // const contract = new web3.eth.Contract(ABI,ADDRESS);
+      // const owneraccount = await contract.methods.owner().call()
+
       // if(accounts[0] === owner_account || pass === window.localStorage.getItem("admin_pass")){
       if(accounts[0] === owner_account){
          window.localStorage.setItem("admin_login","true");
+         alert("Welcome!");
          window.location.href="/admin"
       }
-      
       else{
           alert("Invalid Wallet Address or Password!")
+          window.location.reload();
       }
-      // window.localStorage.setItem("admin_login","true");
-      // window.location.href="/admin"
   }
 
-  
 
-    return(
+  return(
       
     <div className="wrapper fadeInDown">
      <br/><br/><br/>
      <div id="formContent">
-   
      <br/>
     <div className="fadeIn first">
       <i className="fa fa-user fa-4x" aria-hidden="true"></i>
@@ -70,7 +73,7 @@ function AdminLogin(){
       </div>
       <br/><br/>
      </div>
-</div>
+  </div>
     )
 }
 export default AdminLogin;

@@ -28,6 +28,8 @@ function MainSection(){
     const [label3, setLabel3] = useState("Official NFT Collection");
     const [label4, setLabel4] = useState("MINTING April 7th ");
     const [total_mint1, setMint] = useState(0);
+    const [price1, setPrice1] = useState(0);
+    const [price2, setPrice2] = useState(0);
     const { ethereum } = window;
 
     const providerOptions =  !ethereum ? {
@@ -155,6 +157,10 @@ function MainSection(){
             const contract = new web3.eth.Contract(ABI, ADDRESS);
             const t_mint = await contract.methods.totalSupply().call();
             setMint(t_mint);
+            const p1 = await contract.methods.mintPrice().call();
+            setPrice1(p1);
+            const p2 = await contract.methods.whiteMintPrice().call();
+            setPrice2(p2);
         } catch(error) {
             if(error.message == "User rejected") window.location.reload();
         }
@@ -273,8 +279,8 @@ function MainSection(){
                                             account = {account} 
                                             total_mint1 = {total_mint1}
                                             o_account = {owner_account}
-                                            mint_price = {token_price}
-                                            white_price = {token_price1} />
+                                            mint_price = {price1}
+                                            white_price = {price2} />
         }
         {
             ( distance > 1 ) ? <></> : <Dashboard account = {account}/>
