@@ -121,12 +121,13 @@ function MainSection(){
 
     useEffect(async () => {
 
+        await loadBlockchain(dispatch);
         if(web3Modal.cachedProvider) {
-            // connectButton();
+            connectButton();
             // await loadBlockchain(dispatch);
-            const web3 = new Web3(Web3.givenProvider);
-            const acc = await web3.eth.getAccounts();
-            setAccount(acc[0]);
+            // const web3 = new Web3(Web3.givenProvider);
+            // const acc = await web3.eth.getAccounts();
+            // setAccount(acc[0]);
         }
 
         const interval = setInterval(() => {
@@ -143,30 +144,26 @@ function MainSection(){
         }, 1000);
         
         return () => clearInterval(interval);
-    }, [distance, accounts[0]])
+    }, [distance, account])
 
     const connectButton =  async () => {          
         try {
             const provider = await web3Modal.connect();
-            console.log(provider);
             const web3 = new Web3(provider);
             const acc = await web3.eth.getAccounts();
             setAccount(acc[0]);
             const contract = new web3.eth.Contract(ABI, ADDRESS);
             const t_mint = await contract.methods.totalSupply().call();
             setMint(t_mint);
-            await loadBlockchain(dispatch);
-            web3Modal.clearCachedProvider();
-
         } catch(error) {
             if(error.message == "User rejected") window.location.reload();
         }
     };
     
-    // const disconnectButton = async () => {
-    //     await web3Modal.clearCachedProvider();
-    //     setAccount("");
-    // };
+    const disconnectButton = async () => {
+        await web3Modal.clearCachedProvider();
+        setAccount("");
+    };
     
     return(
         <>
@@ -260,8 +257,8 @@ function MainSection(){
                                             f    d-block
                                                 text-bold
                                             "
-                                            //href="#wallet"
-                                            // onClick={ disconnectButton }
+                                            href="#wallet"
+                                            onClick={ disconnectButton }
                                         >{account}
                                         </a>
                                 )

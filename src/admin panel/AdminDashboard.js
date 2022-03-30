@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import '../css/adminStyle.css';
 import AdminHome from "./AdminHome";
 import SetMintingPrice from "./SetMintingPrice";
@@ -8,26 +8,16 @@ import TokenSharing from "./TokenGiveAway";
 import ReservedUsers from "./ReservedUsers";
 import { loadBlockchain } from '../store/asyncActions';
 import { useStore } from '../context/GlobalState';
-import Web3 from "web3";
-
 function AdminDashboard(){
 
     const logout = () => {
         window.localStorage.removeItem("admin_login");
     }
     
-    // const [{accounts}, dispatch] = useStore();
-    const[account, setAccount] = useState();
-    const[total, setTotal] = useState();
-    const[mintprice, setMint] = useState();
-    const[whiteprice, setWhite] = useState();
-
+    const [{accounts}, dispatch] = useStore();
     useEffect(async()=>{
-        // await loadBlockchain(dispatch);
-        const web3 = new Web3(Web3.givenProvider);
-        const acc = await web3.eth.getAccounts();
-        setAccount(acc[0]);
-    },[account]);
+        await loadBlockchain(dispatch);
+    },[accounts[0]]);
 
       
     return(

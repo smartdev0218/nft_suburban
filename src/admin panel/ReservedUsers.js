@@ -14,7 +14,7 @@ function ReservedUsers(){
     const [sig, setsign] = useState([])
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [state, SetState] = useState(true);
+    const [state, SetState] = useState();
 
     useEffect(async()=>{
       await loadBlockchain(dispatch);

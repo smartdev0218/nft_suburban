@@ -229,6 +229,13 @@ main .slider__container img {
     text-overflow: ellipsis;
 }
 
+#main__sec__text .text__wrapper #collect__now1:hover {
+    cursor: pointer;
+    background-color: white !important;
+    color: black;
+}
+
+
 #main__sec__text .text__wrapper #collect__now:hover {
     cursor: pointer;
     background-color: white !important;

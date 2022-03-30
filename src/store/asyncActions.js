@@ -12,6 +12,7 @@ export const loadBlockchain = async(dispatch) =>{
         if(Web3.givenProvider){
     
             await Web3.givenProvider.enable();
+            console.log("Web3.givenProvider enable= ",Web3.givenProvider);
             dispatch(setupWeb3(web3));
             
             const contract = new web3.eth.Contract(ABI,ADDRESS);
