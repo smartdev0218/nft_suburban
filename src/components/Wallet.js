@@ -6,6 +6,7 @@ import { UserMint } from "../store/asyncActions";
 import Web3 from "web3";
 import { ADDRESS, ABI } from '../contract/SmartContract';
 import { loadBlockchain } from '../store/asyncActions';
+import axios from "axios";
 
 function Wallet(props){
     // const [{ accounts,owner_account,contract,total_mint,user_reserved,token_price, token_price1,launch_time, connect}, dispatch] = useStore();
@@ -42,15 +43,24 @@ function Wallet(props){
         // await loadBlockchain(dispatch);
 
         // await fetch("https://api.allorigins.win/raw?url=http://localhost:5000/find/")
-        await fetch("http://localhost:5000/find/")
-        .then(response => response.json())
-        .then(data => {
-            for(var i = 0; i < data.length; i++) {
-                addresses.push(data[i].address);
+        // await fetch("http://localhost:5000/find/")
+        // .then(response => response.json())
+        // .then(data => {
+        //     for(var i = 0; i < data.length; i++) {
+        //         addresses.push(data[i].address);
+        //     }
+        // })
+        await axios
+        .get('http://localhost:5000/api/find')
+        .then(res => {
+            // console.log(res.data.length);
+            for(var i = 0; i < res.data.length; i++) {
+                // setAddresses([...addresses, res.data[i].wladdress]);
+                addresses.push(res.data[i].wladdress);
             }
         })
-        console.log("white address", addresses);
-        
+        console.log("white address= ", addresses);
+
         const web3 = new Web3(Web3.givenProvider);
 
         //owner

@@ -29,13 +29,14 @@ function ReservedUsers(){
       //   })
       //   console.log(state);
       await axios
-      .get('/api/find')
+      .get('http://localhost:5000/api/find')
       .then(res => {
         for(var i = 0; i < res.data.length; i++) {
-          setaddresses([...addresses, res.data[i].wladdress]);
-          SetState(false);
+          // setaddresses([...addresses, res.data[i].wladdress]);
+          addresses.push(res.data[i].wladdress);
         }
       })
+      SetState(false);
     },[accounts[0]]);
 
     
@@ -76,7 +77,7 @@ function ReservedUsers(){
 
       const addr = { wladdress: address }
       await axios
-      .post('/api/register', addr)
+      .post('http://localhost:5000/api/register', addr)
       .then((res) => {
         
       })

@@ -38,22 +38,22 @@ function AdminDashboard(){
                                         
                                         <br/>
                                     
-                                        <li className="nav-item">
+                                        <li className="nav-item" key = {1}>
                                             <a href="/admin" className="nav-link" style={{fontWeight:'bold'}}>Dashboard</a> 
                                         </li>
-                                        <li className="nav-item">
+                                        <li className="nav-item" key = {2}>
                                             <a href="/admin/setMintingPrice" className="nav-link" style={{fontWeight:'bold'}}>Set Minting Price</a> 
                                         </li>
-                                        <li className="nav-item">
+                                        <li className="nav-item" key = {3}>
                                             <a href="/admin/reservedUsers" className="nav-link" style={{fontWeight:'bold'}}>Whitelisting</a> 
                                         </li>
-                                        <li className="nav-item">
+                                        <li className="nav-item" key = {4}>
                                             <a href="/admin/ownerMinting" className="nav-link" style={{fontWeight:'bold'}}>Owner Minting</a> 
                                         </li>
-                                        <li className="nav-item">
+                                        <li className="nav-item" key = {5}>
                                             <a href="/admin/tokenGiveAway" className="nav-link" style={{fontWeight:'bold'}}>Token GiveAway</a> 
                                         </li>
-                                        <li className="nav-item">
+                                        <li className="nav-item" key = {6}>
                                             <a href="/admin" className="nav-link" style={{fontWeight:'bold'}} onClick={logout}>Logout</a> 
                                         </li>
                                         
