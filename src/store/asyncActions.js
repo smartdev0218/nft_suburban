@@ -11,7 +11,7 @@ export const loadBlockchain = async(dispatch) =>{
 
         if(Web3.givenProvider){
     
-            await Web3.givenProvider.enable();
+            // await Web3.givenProvider.enable();
             console.log("Web3.givenProvider enable= ",Web3.givenProvider);
             dispatch(setupWeb3(web3));
             
@@ -21,6 +21,7 @@ export const loadBlockchain = async(dispatch) =>{
             console.log("contract.methods = ", contract.methods);
       
             const accounts = await web3.eth.getAccounts();
+            console.log("account: ", accounts[0]);
             dispatch(addEthereumAccounts(accounts));
 
             const totalminted = await contract.methods.totalSupply().call()

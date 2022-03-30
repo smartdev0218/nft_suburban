@@ -144,7 +144,7 @@ function MainSection(){
         }, 1000);
         
         return () => clearInterval(interval);
-    }, [distance, account])
+    }, [distance, accounts[0]])
 
     const connectButton =  async () => {          
         try {

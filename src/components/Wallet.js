@@ -51,12 +51,8 @@ function Wallet(props){
         })
         console.log("white address", addresses);
         
-        console.log("owner", props.o_account);
-        console.log("mint_price", props.mint_price);
-        console.log("white_price", props.white_price);
         const web3 = new Web3(Web3.givenProvider);
 
-        console.log("owner account", props.o_account);
         //owner
         if(props.account == props.o_account) alert("You are owner!");
         

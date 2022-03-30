@@ -1,7 +1,7 @@
-
 import React,{ useEffect, useState } from 'react';
 import { useStore } from '../context/GlobalState'
 import { loadBlockchain } from '../store/asyncActions';
+import axios from 'axios';
 
 function ReservedUsers(){
 
@@ -14,20 +14,28 @@ function ReservedUsers(){
     const [sig, setsign] = useState([])
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [state, SetState] = useState();
+    const [state, SetState] = useState(true);
 
     useEffect(async()=>{
       await loadBlockchain(dispatch);
       // await fetch("https://api.allorigins.win/raw?url=http://localhost:5000/find/")
-      await fetch("http://localhost:5000/find/")
-        .then(response => response.json())
-        .then(data => {
-            for(var i = 0; i < data.length; i++) {
-                addresses.push(data[i].address);
-            }
-            SetState(false);
-        })
-        console.log(state);
+      // await fetch("http://localhost:5000/find/")
+      //   .then(response => response.json())
+      //   .then(data => {
+      //       for(var i = 0; i < data.length; i++) {
+      //           addresses.push(data[i].address);
+      //       }
+      //       SetState(false);
+      //   })
+      //   console.log(state);
+      await axios
+      .get('/api/find')
+      .then(res => {
+        for(var i = 0; i < res.data.length; i++) {
+          setaddresses([...addresses, res.data[i].wladdress]);
+          SetState(false);
+        }
+      })
     },[accounts[0]]);
 
     
@@ -50,21 +58,29 @@ function ReservedUsers(){
         alert("You are not an owner")
       }
 
-      let result = await fetch(
-        // 'https://api.allorigins.win/raw?url=http://localhost:5000/register', {
-        'http://localhost:5000/register', {
-            method: "post",
-            body: JSON.stringify({ address }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        result = await result.json();
-        console.warn(result);
-        if (result) {
-            alert("Data saved successfully");
-            setaddress("");
-        }
+      // let result = await fetch(
+      //   // 'https://api.allorigins.win/raw?url=http://localhost:5000/register', {
+      //   'http://localhost:5000/register', {
+      //       method: "post",
+      //       body: JSON.stringify({ address }),
+      //       headers: {
+      //           'Content-Type': 'application/json'
+      //       }
+      //   })
+      //   result = await result.json();
+      //   console.warn(result);
+      //   if (result) {
+      //       alert("Data saved successfully");
+      //       setaddress("");
+      //   }
+
+      const addr = { wladdress: address }
+      await axios
+      .post('/api/register', addr)
+      .then((res) => {
+        
+      })
+      .catch((err) => console.log(err));
     }
 
     const handleSubmit = async () => {
