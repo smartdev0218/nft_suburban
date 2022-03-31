@@ -47,7 +47,7 @@ function ReservedUsers(){
         // setsign([...sig,ss])
         document.getElementById('addr').value = "";
       }else{
-        alert("You are not an owner")
+        // alert("You are not an owner")
       }
 
       let result = await fetch(

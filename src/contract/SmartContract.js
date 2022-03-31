@@ -1,4 +1,4 @@
-export const ADDRESS = '0x00044EB5738FD38F62194BCCDe30AfBfBF9532A3'
+export const ADDRESS = '0x4BFda24f44071ea3cb26cF3941528d8a729D66FD'
 
 export const ABI = [
   {

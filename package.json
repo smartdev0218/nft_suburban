@@ -27,6 +27,7 @@
         "ethers": "5.5.4",
         "framer-motion": "^4.1.17",
         "history": "5",
+        "http-proxy-middleware": "^2.0.4",
         "https": "^1.0.0",
         "netlify": "^10.0.0",
         "npm": "^8.3.0",
@@ -68,10 +69,5 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
-    },
-    "proxy": {
-        "/api": {
-            "target": "http://localhost:5000"
-        }
     }
 }
